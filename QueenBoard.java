@@ -32,7 +32,21 @@ public class QueenBoard {
     *(pythonic string notation for clarity,
     *excludes the character up to the *)
     */
-  public String toString(){}
+  public String toString(){
+    String ans = "";
+    for (int r = 0; r < board.length; r ++) {
+      for (int c = 0; c < board.length; c ++) {
+        if (board [r][c] == -1) {
+          ans += "Q ";
+        }
+        else {
+          ans += "_ ";
+        }
+      }
+    }
+    return ans;
+
+  }
 
 
 
@@ -44,13 +58,17 @@ public class QueenBoard {
     *@throws IllegalStateException when the board starts with any non-zero value
 
     */
-  public boolean solve(){}
+  public boolean solve(){
+    return true;
+  }
 
     /**
     *@return the number of solutions found, and leaves the board filled with only 0's
     *@throws IllegalStateException when the board starts with any non-zero value
     */
-  public int countSolutions(){}
+  public int countSolutions(){
+    return 1; 
+  }
 
 
 }
