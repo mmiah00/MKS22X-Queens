@@ -52,7 +52,7 @@ public class QueenBoard {
   private boolean removeQueen(int x, int y) {
     if (x < board[0].length && y < board.length && x >= 0 && y >= 0 && board[y][x] == -1) {
       board [y][x] = 0;
-      this.recuperate (x,y); 
+      this.recuperate (x,y);
       return true;
     }
     return false;
@@ -118,10 +118,12 @@ public class QueenBoard {
         }
         else {
           if (r == board[0].length - 1 ) {
-            ans += "_\n";
+            //ans += "_\n";
+            ans += board[c][r] + "\n";
           }
           else {
-            ans += "_ ";
+            //ans += "_ ";
+            ans += board[c][r] + "\n";
           }
         }
       }
