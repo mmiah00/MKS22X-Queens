@@ -18,6 +18,30 @@ public class QueenBoard {
     return false;
   }
 
+  private void xHorizontal (int x, int y) {
+    int temp = 0;
+    while (temp < board.length) {
+      board [y][temp] += 1;
+      temp ++;
+    }
+  }
+
+  private void xVertical (int x, int y) {
+    int temp = 0;
+    while (temp < board.length) {
+      board [temp][x] += 1;
+      temp ++;
+    }
+  }
+
+  private void xDiagonal (int x, int y) {
+    while (x < board[0].length && y < board.length) {
+      board[y][x] += 1;
+      x ++;
+      y ++;
+    }
+  }
+
   private boolean removeQueen(int x, int y) {
     if (x < board[0].length && y < board.length && x >= 0 && y >= 0 && board[y][x] == -1) {
       board [y][x] = 0;
@@ -89,7 +113,7 @@ public class QueenBoard {
   }
 
   public boolean solvable (int x, int y) {
-    return true; 
+    return true;
   }
 
     /**
