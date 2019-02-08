@@ -1,19 +1,26 @@
 public class QueenBoard {
   private int[][]board;
+
   public QueenBoard(int size){
     board = new int [size][size];
+    for (int r = 0; r < size; r++) {
+      for (int c = 0; c < size; c ++) {
+        board [r][c] = 0;
+      }
+    }
   }
 
-  private boolean addQueen(int r, int c) {
-    if (r < board.length && c < board[0].length && board[r][c] < 0) {
-      board [r][c] = -1;
+  private boolean addQueen(int x, int y) {
+    if (x < board[0].length && y < board.length && x >=0 && y >= 0 && board[y][x] > -1 ) {
+      board [y][x] = -1;
       return true;
     }
     return false;
   }
-  private boolean removeQueen(int r, int c) {
-    if (r < board.length && c < board[0].length && board[r][c] == -1) {
-      board [r][c] = 0;
+
+  private boolean removeQueen(int x, int y) {
+    if (x < board[0].length && y < board.length && x >= 0 && y >= 0 && board[y][x] == -1) {
+      board [y][x] = 0;
       return true;
     }
     return false;
@@ -34,18 +41,27 @@ public class QueenBoard {
     */
   public String toString(){
     String ans = "";
-    for (int r = 0; r < board.length; r ++) {
-      for (int c = 0; c < board.length; c ++) {
-        if (board [r][c] == -1) {
-          ans += "Q ";
+    for (int c = 0; c < board.length; c ++){
+      for (int r = 0; r < board[0].length; r ++) {
+        if (board [c][r] == -1) {
+          if (r == board[0].length - 1 ) {
+            ans += "Q\n";
+          }
+          else {
+            ans += "Q ";
+          }
         }
         else {
-          ans += "_ ";
+          if (r == board[0].length - 1 ) {
+            ans += "_\n";
+          }
+          else {
+            ans += "_ ";
+          }
         }
       }
     }
     return ans;
-
   }
 
 
@@ -58,7 +74,7 @@ public class QueenBoard {
     *@throws IllegalStateException when the board starts with any non-zero value
 
     */
-  public boolean solve(){
+  public boolean solve() throws IllegalStateException {
     return true;
   }
 
@@ -66,8 +82,8 @@ public class QueenBoard {
     *@return the number of solutions found, and leaves the board filled with only 0's
     *@throws IllegalStateException when the board starts with any non-zero value
     */
-  public int countSolutions(){
-    return 1; 
+  public int countSolutions() throws IllegalStateException{
+    return 1;
   }
 
 
