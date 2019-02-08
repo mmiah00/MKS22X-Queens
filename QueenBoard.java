@@ -13,6 +13,7 @@ public class QueenBoard {
   private boolean addQueen(int x, int y) {
     if (x < board[0].length && y < board.length && x >=0 && y >= 0 && board[y][x] > -1 ) {
       board [y][x] = -1;
+      this.eliminate (x,y);
       return true;
     }
     return false;
@@ -42,13 +43,53 @@ public class QueenBoard {
     }
   }
 
+  private void eliminate (int x, int y) {
+    this.xHorizontal (x,y);
+    this.xVertical (x,y);
+    this.xDiagonal (x,y);
+  }
+
   private boolean removeQueen(int x, int y) {
     if (x < board[0].length && y < board.length && x >= 0 && y >= 0 && board[y][x] == -1) {
       board [y][x] = 0;
+      this.recuperate (x,y); 
       return true;
     }
     return false;
   }
+
+  private void oHorizontal (int x, int y) {
+    int temp = 0;
+    while (temp < board.length) {
+      board [y][temp] -= 1;
+      temp ++;
+    }
+  }
+
+  private void oVertical (int x, int y) {
+    int temp = 0;
+    while (temp < board.length) {
+      board [temp][x] -= 1;
+      temp ++;
+    }
+  }
+
+  private void oDiagonal (int x, int y) {
+    while (x < board[0].length && y < board.length) {
+      board[y][x] -= 1;
+      x ++;
+      y ++;
+    }
+  }
+
+  private void recuperate (int x, int y) {
+    this.oHorizontal (x, y);
+    this.oVertical (x, y);
+    this.oDiagonal (x, y);
+  }
+
+
+
     /**
     *@return The output string formatted as follows:
     *All numbers that represent queens are replaced with 'Q'
@@ -99,7 +140,7 @@ public class QueenBoard {
 
     */
   public boolean solve() throws IllegalStateException {
-    if (this.solvable (0,0)) {
+    if (this.solvable (board.length, 0,0)) {
       return true;
     }
     else {
@@ -112,7 +153,10 @@ public class QueenBoard {
     }
   }
 
-  public boolean solvable (int x, int y) {
+  public boolean solvable (int size, int x, int y) {
+    if (size == 2 || size == 3) {
+      return false;
+    }
     return true;
   }
 
