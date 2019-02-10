@@ -2,6 +2,7 @@ public class Driver {
   public static void main (String [] args) {
     QueenBoard testing = new QueenBoard (8);
     System.out.println (testing.toString ());
+    /*
     System.out.println (testing.addQueen (3,4));
     System.out.println (testing.addQueen (6,2));
     System.out.println (testing.addQueen (4,0));
@@ -16,5 +17,11 @@ public class Driver {
     System.out.println (testing.addQueen (200,2));
     System.out.println (testing.addQueen (-3,2));
     System.out.println (testing.toString ());
+    */
+
+    testing.addQueen (2,3);
+    System.out.println (testing.testString ());
+    testing.removeQueen (2,3);
+    System.out.println (testing.testString ());
   }
 }

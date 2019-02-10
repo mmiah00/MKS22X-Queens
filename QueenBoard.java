@@ -10,10 +10,10 @@ public class QueenBoard {
     }
   }
 
-  private boolean addQueen(int x, int y) {
+  public boolean addQueen(int x, int y) {
     if (x < board[0].length && y < board.length && x >=0 && y >= 0 && board[y][x] > -1 ) {
-      board [y][x] = -1;
       this.eliminate (x,y);
+      board [y][x] = -1;
       return true;
     }
     return false;
@@ -22,7 +22,9 @@ public class QueenBoard {
   private void xHorizontal (int x, int y) {
     int temp = 0;
     while (temp < board.length) {
-      board [y][temp] += 1;
+      if (temp != x) {
+        board [y][temp] += 1;
+      }
       temp ++;
     }
   }
@@ -30,16 +32,20 @@ public class QueenBoard {
   private void xVertical (int x, int y) {
     int temp = 0;
     while (temp < board.length) {
-      board [temp][x] += 1;
+      if (temp != y) {
+        board [temp][x] += 1;
+      }
       temp ++;
     }
   }
 
   private void xDiagonal (int x, int y) {
-    while (x < board[0].length && y < board.length) {
-      board[y][x] += 1;
-      x ++;
-      y ++;
+    int xtemp = x;
+    int ytemp = y;
+    while (xtemp < board[0].length && ytemp < board.length) {
+      board[ytemp][xtemp] += 1;
+      xtemp ++;
+      ytemp ++;
     }
   }
 
@@ -49,10 +55,10 @@ public class QueenBoard {
     this.xDiagonal (x,y);
   }
 
-  private boolean removeQueen(int x, int y) {
+  public boolean removeQueen(int x, int y) {
     if (x < board[0].length && y < board.length && x >= 0 && y >= 0 && board[y][x] == -1) {
-      board [y][x] = 0;
       this.recuperate (x,y);
+      board [y][x] = 0;
       return true;
     }
     return false;
@@ -118,12 +124,39 @@ public class QueenBoard {
         }
         else {
           if (r == board[0].length - 1 ) {
+            ans += "_\n";
+            //ans += board[c][r] + "\n";
+          }
+          else {
+            ans += "_ ";
+            //ans += board[c][r] + "\n";
+          }
+        }
+      }
+    }
+    return ans;
+  }
+
+  public String testString () {
+    String ans = "";
+    for (int c = 0; c < board.length; c ++){
+      for (int r = 0; r < board[0].length; r ++) {
+        if (board [c][r] == -1) {
+          if (r == board[0].length - 1 ) {
+            ans += "Q\n";
+          }
+          else {
+            ans += "Q ";
+          }
+        }
+        else {
+          if (r == board[0].length - 1 ) {
             //ans += "_\n";
-            ans += board[c][r] + "\n";
+            ans += board[c][r] + " \n";
           }
           else {
             //ans += "_ ";
-            ans += board[c][r] + "\n";
+            ans += board[c][r] + " ";
           }
         }
       }
