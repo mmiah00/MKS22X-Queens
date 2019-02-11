@@ -10,8 +10,8 @@ public class QueenBoard {
     }
   }
 
-  public boolean addQueen(int x, int y) { //checks if you can add a queen, sees if safe for queen to be placed at x, y 
-    if (x < board[0].length && y < board.length && x >=0 && y >= 0 && board[y][x] > -1 ) {
+  public boolean addQueen(int x, int y) { //checks if you can add a queen, sees if safe for queen to be placed at x, y
+    if (x < board[0].length && y < board.length && x >=0 && y >= 0 && board[y][x] == 0 ) {
       if (this.eliminate (x, y,  1,  0) //for right of queen
           && this.eliminate (x, y, -1,  0) //for left of queen
           && this.eliminate (x, y,  0,  1) //for below queen
@@ -34,7 +34,7 @@ public class QueenBoard {
     x += xinc;
     y += yinc;
     while (x < board[0].length && y < board.length && x > -1 && y > -1) {//xinc for left (-1) or right (1) and yinc for up (-1) and down (1)
-      if (board[y][x] == -1) {
+      if (board[y][x] == -1) { //checks if there is a queen
         return false;
       }
       board[y][x] ++; //adding to number of squares in danger
@@ -46,15 +46,15 @@ public class QueenBoard {
 
   public boolean removeQueen(int x, int y) {
     if (x < board[0].length && y < board.length && x >= 0 && y >= 0 && board[y][x] == -1) {
-      this.recuperate (x, y,  1,  0); //for right of queen
-      this.recuperate (x, y, -1,  0); //for left of queen
-      this.recuperate (x, y,  0,  1); //for below queen
-      this.recuperate (x, y,  0, -1); //for above queen
-      this.recuperate (x, y,  1,  1); //for upper right corner
-      this.recuperate (x, y, -1, -1); //for lower right corner
-      this.recuperate (x, y, -1,  1); //for upper left corner
-      this.recuperate (x, y,  1, -1); //for lower left corner
-      board [y][x] = 0;
+      this.recuperate (x + 1, y,  1,  0); //for right of queen
+      this.recuperate (x - 1, y, -1,  0); //for left of queen
+      this.recuperate (x, y + 1,  0,  1); //for below queen
+      this.recuperate (x, y - 1,  0, -1); //for above queen
+      this.recuperate (x + 1, y + 1,  1,  1); //for upper right corner
+      this.recuperate (x - 1 , y - 1, -1, -1); //for lower right corner
+      this.recuperate (x -1 , y + 1, -1,  1); //for upper left corner
+      this.recuperate (x + 1, y - 1,  1, -1); //for lower left corner
+      board[y][x] = 0;
       return true;
     }
     return false;
