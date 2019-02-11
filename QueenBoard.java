@@ -175,24 +175,6 @@ public class QueenBoard {
     return false;
   }
 
-  public boolean solvable (int col) {
-    if (col >= board[0].length) {
-      return true;
-    }
-    else {
-      for (int y = 0; y < col; y ++) {
-        if (this.addQueen (y,col)) {
-          this.addQueen (y,col);
-          if (solvable (col + 1)) {
-            return true;
-          }
-          this.removeQueen (y,col);
-        }
-      }
-    }
-    return false;
-  }
-
     /**
     *@return the number of solutions found, and leaves the board filled with only 0's
     *@throws IllegalStateException when the board starts with any non-zero value
