@@ -147,15 +147,17 @@ public class QueenBoard {
 
     */
   public boolean solve() throws IllegalStateException {
-    if (solvable (0,0) == false) {
-      for (int y = 0; y < board.length; y ++) {
-        for (int x = 0; x < board[0].length; x ++) {
+    if (solvable (0,0)) {
+      return true;
+    }
+    else {
+      for (int y = 0; y < board.length; y++) {
+        for (int x = 0; x < board[0].length; x++) {
           board[y][x] = 0;
         }
       }
-      return false;
+      return false; 
     }
-    return true;
   }
 
   public boolean solvable (int x, int y) {
