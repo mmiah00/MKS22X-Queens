@@ -12,26 +12,31 @@ public class QueenBoard {
 
   public boolean addQueen(int x, int y) {
     if (x < board[0].length && y < board.length && x >=0 && y >= 0 && board[y][x] > -1 ) {
-      this.eliminate (x, y,  1,  0); //for right of queen
-      this.eliminate (x, y, -1,  0); //for left of queen
-      this.eliminate (x, y,  0,  1); //for below queen
-      this.eliminate (x, y,  0, -1); //for above queen
-      this.eliminate (x, y,  1,  1); //for upper right corner
-      this.eliminate (x, y, -1, -1); //for lower right corner
-      this.eliminate (x, y, -1,  1); //for upper left corner
-      this.eliminate (x, y,  1, -1); //for lower left corner
-      board [y][x] = -1;
-      return true;
+      board[y][x] = -1;
+      return this.eliminate (x, y,  1,  0) //for right of queen
+          && this.eliminate (x, y, -1,  0) //for left of queen
+          && this.eliminate (x, y,  0,  1) //for below queen
+          && this.eliminate (x, y,  0, -1) //for above queen
+          && this.eliminate (x, y,  1,  1) //for upper right corner
+          && this.eliminate (x, y, -1, -1) //for lower right corner
+          && this.eliminate (x, y, -1,  1) //for upper left corner
+          && this.eliminate (x, y,  1, -1); //for lower left corner
     }
     return false;
   }
 
-  private void eliminate (int x, int y, int xinc, int yinc) {
+  private boolean eliminate (int x, int y, int xinc, int yinc) {
+    x += xinc;
+    y += yinc;
     while (x < board[0].length && y < board.length && x > -1 && y > -1) {//xinc for left (-1) or right (1) and yinc for up (-1) and down (1)
+      if (board[y][x] == -1) {
+        return false;
+      }
       board[y][x] ++; //adding to number of squares in danger
       x += xinc; //moving right or left
       y += yinc; //moving up or down
     }
+    return true;
   }
 
   public boolean removeQueen(int x, int y) {
@@ -101,7 +106,7 @@ public class QueenBoard {
     return ans;
   }
 
-  public String testString () {
+  public String testString () { //to test addQueen and removeQueen
     String ans = "";
     for (int c = 0; c < board.length; c ++){
       for (int r = 0; r < board[0].length; r ++) {
