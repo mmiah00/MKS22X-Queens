@@ -12,86 +12,50 @@ public class QueenBoard {
 
   public boolean addQueen(int x, int y) {
     if (x < board[0].length && y < board.length && x >=0 && y >= 0 && board[y][x] > -1 ) {
-      this.eliminate (x,y);
+      this.eliminate (x, y,  1,  0); //for right of queen
+      this.eliminate (x, y, -1,  0); //for left of queen
+      this.eliminate (x, y,  0,  1); //for below queen
+      this.eliminate (x, y,  0, -1); //for above queen
+      this.eliminate (x, y,  1,  1); //for upper right corner
+      this.eliminate (x, y, -1, -1); //for lower right corner
+      this.eliminate (x, y, -1,  1); //for upper left corner
+      this.eliminate (x, y,  1, -1); //for lower left corner
       board [y][x] = -1;
       return true;
     }
     return false;
   }
 
-  private void xHorizontal (int x, int y) {
-    int temp = 0;
-    while (temp < board.length) {
-      if (temp != x) {
-        board [y][temp] += 1;
-      }
-      temp ++;
+  private void eliminate (int x, int y, int xinc, int yinc) {
+    while (x < board[0].length && y < board.length && x > -1 && y > -1) {//xinc for left (-1) or right (1) and yinc for up (-1) and down (1)
+      board[y][x] ++; //adding to number of squares in danger
+      x += xinc; //moving right or left
+      y += yinc; //moving up or down
     }
-  }
-
-  private void xVertical (int x, int y) {
-    int temp = 0;
-    while (temp < board.length) {
-      if (temp != y) {
-        board [temp][x] += 1;
-      }
-      temp ++;
-    }
-  }
-
-  private void xDiagonal (int x, int y) {
-    int xtemp = x;
-    int ytemp = y;
-    while (xtemp < board[0].length && ytemp < board.length) {
-      board[ytemp][xtemp] += 1;
-      xtemp ++;
-      ytemp ++;
-    }
-  }
-
-  private void eliminate (int x, int y) {
-    this.xHorizontal (x,y);
-    this.xVertical (x,y);
-    this.xDiagonal (x,y);
   }
 
   public boolean removeQueen(int x, int y) {
     if (x < board[0].length && y < board.length && x >= 0 && y >= 0 && board[y][x] == -1) {
-      this.recuperate (x,y);
+      this.recuperate (x, y,  1,  0); //for right of queen
+      this.recuperate (x, y, -1,  0); //for left of queen
+      this.recuperate (x, y,  0,  1); //for below queen
+      this.recuperate (x, y,  0, -1); //for above queen
+      this.recuperate (x, y,  1,  1); //for upper right corner
+      this.recuperate (x, y, -1, -1); //for lower right corner
+      this.recuperate (x, y, -1,  1); //for upper left corner
+      this.recuperate (x, y,  1, -1); //for lower left corner
       board [y][x] = 0;
       return true;
     }
     return false;
   }
 
-  private void oHorizontal (int x, int y) {
-    int temp = 0;
-    while (temp < board.length) {
-      board [y][temp] -= 1;
-      temp ++;
+  private void recuperate (int x, int y, int xinc, int yinc) { //xinc for left (-1) or right (1) and yinc for up (-1) and down (1)
+    while (x < board[0].length && y < board.length && x > -1 && y > -1) {
+      board[y][x] --; //subtracting from number of squares in danger
+      x += xinc; //moving right or left
+      y += yinc; //moving up or down
     }
-  }
-
-  private void oVertical (int x, int y) {
-    int temp = 0;
-    while (temp < board.length) {
-      board [temp][x] -= 1;
-      temp ++;
-    }
-  }
-
-  private void oDiagonal (int x, int y) {
-    while (x < board[0].length && y < board.length) {
-      board[y][x] -= 1;
-      x ++;
-      y ++;
-    }
-  }
-
-  private void recuperate (int x, int y) {
-    this.oHorizontal (x, y);
-    this.oVertical (x, y);
-    this.oDiagonal (x, y);
   }
 
 
