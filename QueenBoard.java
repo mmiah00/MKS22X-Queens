@@ -68,8 +68,6 @@ public class QueenBoard {
     }
   }
 
-
-
     /**
     *@return The output string formatted as follows:
     *All numbers that represent queens are replaced with 'Q'
@@ -149,7 +147,7 @@ public class QueenBoard {
 
     */
   public boolean solve() throws IllegalStateException {
-    if (solvable (0) == false) {
+    if (solvable (0,0) == false) {
       for (int y = 0; y < board.length; y ++) {
         for (int x = 0; x < board[0].length; x ++) {
           board[y][x] = 0;
@@ -158,6 +156,23 @@ public class QueenBoard {
       return false;
     }
     return true;
+  }
+
+  public boolean solvable (int x, int y) {
+    if (x >= board[0].length) {
+      return true;
+    }
+    else {
+      for (int a= 0 ; a < board.length; a ++) {
+        if (this.addQueen (a,x)) {
+          if (solvable (x + 1, y)) {
+            return true;
+          }
+          this.removeQueen (x,y);
+        }
+      }
+    }
+    return false;
   }
 
   public boolean solvable (int col) {

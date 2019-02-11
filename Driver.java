@@ -1,6 +1,6 @@
 public class Driver {
   public static void main (String [] args) {
-    QueenBoard testing = new QueenBoard (5);
+    /*
     testing.addQueen(1,3);
     System.out.println (testing.testString ());
     testing.removeQueen(1,3);
@@ -11,5 +11,10 @@ public class Driver {
     System.out.println (testing.testString ());
     testing.addQueen(1,3);
     System.out.println (testing.testString ());
+    */
+    for (int x = 1; x <= 10; x ++) {
+      QueenBoard testing = new QueenBoard (x);
+      System.out.println (x + ": " + testing.solve ());
+    }
   }
 }
