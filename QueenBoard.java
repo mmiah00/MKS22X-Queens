@@ -10,17 +10,22 @@ public class QueenBoard {
     }
   }
 
-  public boolean addQueen(int x, int y) {
+  public boolean addQueen(int x, int y) { //checks if you can add a queen, sees if safe for queen to be placed at x, y 
     if (x < board[0].length && y < board.length && x >=0 && y >= 0 && board[y][x] > -1 ) {
-      board[y][x] = -1;
-      return this.eliminate (x, y,  1,  0) //for right of queen
+      if (this.eliminate (x, y,  1,  0) //for right of queen
           && this.eliminate (x, y, -1,  0) //for left of queen
           && this.eliminate (x, y,  0,  1) //for below queen
           && this.eliminate (x, y,  0, -1) //for above queen
           && this.eliminate (x, y,  1,  1) //for upper right corner
           && this.eliminate (x, y, -1, -1) //for lower right corner
           && this.eliminate (x, y, -1,  1) //for upper left corner
-          && this.eliminate (x, y,  1, -1); //for lower left corner
+          && this.eliminate (x, y,  1, -1) /*for lower left corner*/) {
+            board[y][x] = -1;
+            return true;
+          }
+      else {
+        return false;
+      }
     }
     return false;
   }
@@ -144,10 +149,7 @@ public class QueenBoard {
 
     */
   public boolean solve() throws IllegalStateException {
-    if (this.solvable (board.length, 0,0)) {
-      return true;
-    }
-    else {
+    if (solvable (0) == false) {
       for (int y = 0; y < board.length; y ++) {
         for (int x = 0; x < board[0].length; x ++) {
           board[y][x] = 0;
@@ -155,13 +157,25 @@ public class QueenBoard {
       }
       return false;
     }
+    return true;
   }
 
-  public boolean solvable (int size, int x, int y) {
-    if (size == 2 || size == 3) {
-      return false;
+  public boolean solvable (int col) {
+    if (col >= board[0].length) {
+      return true;
     }
-    return true;
+    else {
+      for (int y = 0; y < col; y ++) {
+        if (this.addQueen (y,col)) {
+          this.addQueen (y,col);
+          if (solvable (col + 1)) {
+            return true;
+          }
+          this.removeQueen (y,col);
+        }
+      }
+    }
+    return false;
   }
 
     /**
