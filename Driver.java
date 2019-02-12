@@ -19,10 +19,18 @@ public class Driver {
       QueenBoard testing = new QueenBoard (x);
       System.out.println (x + "\t" + testing.solve ());
     }
-
+    ////////////////////////////////////////////////////////////////////////////////////////////
+    System.out.println ("\nFirst 10 Solutions");
     for (int x = 1; x < 15; x ++) {
       QueenBoard testing = new QueenBoard (x);
-      System.out.println (x + ": " + testing.countSolutions ());
+      testing.solve ();
+      System.out.println ("Size: " + x + "\n" + testing.toString ());
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////////
+    System.out.println ("\nSize\tNumber Solutions");
+    for (int x = 1; x < 15; x ++) {
+      QueenBoard testing = new QueenBoard (x);
+      System.out.println (x + "\t" + testing.countSolutions ());
     }
   }
 }
