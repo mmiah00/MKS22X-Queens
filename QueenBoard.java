@@ -186,23 +186,23 @@ public class QueenBoard {
       return 0;
     }
     else {
-      return counter (0,0);
+      return counter (0);
     }
   }
 
-  private int counter (int col, int sum) {
-    if (col >= board.length) {
-      return sum;
+  private int counter (int col) {
+    if (col >= board[0].length) {
+      return 1;
     }
-    else {
-      for (int r = 0; r < board.length; r ++) {
-        if (addQueen (col, r)) {
-          sum += 1;
-        }
-        return counter (col + 1, sum);
+    int sum = 0;
+    for (int r = 0; r < board.length; r++) {
+      addQueen (col,r);
+      if (addQueen (col,r)) {
+        sum += counter (col + 1);
       }
+      removeQueen (col,r);
     }
-    return -1; 
+    return sum;
   }
 
 
