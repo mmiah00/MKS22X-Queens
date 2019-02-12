@@ -147,7 +147,7 @@ public class QueenBoard {
 
     */
   public boolean solve() throws IllegalStateException {
-    if (solvable (0,0)) {
+    if (solvable (0)) {
       return true;
     }
     else {
@@ -156,17 +156,18 @@ public class QueenBoard {
           board[y][x] = 0;
         }
       }
-      return false; 
+      return false;
     }
   }
 
-  public boolean solvable (int x, int y) {
-    if (x >= board[0].length) {
+  public boolean solvable (int col) {
+    /*
+    if (col >= board[0].length) {
       return true;
     }
     else {
       for (int a= 0 ; a < board.length; a ++) {
-        if (this.addQueen (a,x)) {
+        if (this.addQueen (a,col)) {
           if (solvable (x + 1, y)) {
             return true;
           }
@@ -175,6 +176,21 @@ public class QueenBoard {
       }
     }
     return false;
+    */
+    if (col >= board[0].length) {
+      return true;
+    }
+    else {
+      for (int r = 0; r < board.length; r ++) {
+        if (addQueen (col,r)) {
+          if (solvable (col + 1)) {
+            return true;
+          }
+          removeQueen (col,r);
+        }
+      }
+    }
+    return false; 
   }
 
     /**
