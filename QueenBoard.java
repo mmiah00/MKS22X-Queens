@@ -146,7 +146,23 @@ public class QueenBoard {
     *@throws IllegalStateException when the board starts with any non-zero value
 
     */
-  public boolean solve() throws IllegalStateException {
+
+
+    private boolean empty () {
+      for (int y = 0; y < board.length; y ++) {
+        for (int x = 0; x < board[0].length; x ++) {
+          if (board[y][x] != 0) {
+            return false;
+          }
+        }
+      }
+      return true;
+    }
+
+    public boolean solve(){
+    if (!empty ()) {
+      throw new IllegalStateException ();
+    }
     if (solvable (0)) {
       return true;
     }
@@ -181,16 +197,32 @@ public class QueenBoard {
     *@return the number of solutions found, and leaves the board filled with only 0's
     *@throws IllegalStateException when the board starts with any non-zero value
     */
-  public int countSolutions() throws IllegalStateException{
-    if (this.solve () == false) {
-      return 0;
+
+  public int countSolutions(){
+    if (!empty ()) {
+      throw new IllegalStateException ();
     }
-    else {
-      return counter (0,0);
-    }
+    return counter (0);
   }
 
-  private int counter (int col, int sum) {
+  private int counter (int col) {
+    if (board.length < 2 ) {
+      return 1;
+    }
+    if (col >= board[0].length) {
+      return 1;
+    }
+    else {
+      int sum = 0;
+      for (int r = 0; r < board.length; r ++) {
+        if (addQueen (col,r)) {
+          sum += counter (col + 1);
+          removeQueen (col,r);
+        }
+      }
+      return sum;
+    }
+    /*
     if (col >= board[0].length) {
       return sum;
     }
@@ -201,20 +233,8 @@ public class QueenBoard {
       removeQueen (col, r);
       //return counter (col + 1, sum);
     }
-    return counter (col + 1, sum); 
-
-    /*
-    int sum = 0;
-    for (int r = 0; r < board.length; r++) {
-      addQueen (col,r);
-      if (addQueen (col,r)) {
-        sum += counter (col + 1);
-      }
-      removeQueen (col,r);
-    }
-    return sum;
+    return counter (col + 1, sum);
     */
-
   }
 
 
