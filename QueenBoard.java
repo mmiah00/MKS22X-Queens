@@ -3,9 +3,13 @@ public class QueenBoard {
 
   public QueenBoard(int size){
     board = new int [size][size];
-    for (int r = 0; r < size; r++) {
-      for (int c = 0; c < size; c ++) {
-        board [r][c] = 0;
+    reset ();
+  }
+
+  private void reset () {
+    for (int y = 0; y < board.length; y++) {
+      for (int x = 0; x < board[0].length; x++) {
+        board[y][x] = 0;
       }
     }
   }
@@ -138,6 +142,17 @@ public class QueenBoard {
 
 
 
+  private boolean empty () {
+    for (int y = 0; y < board.length; y ++) {
+      for (int x = 0; x < board[0].length; x ++) {
+        if (board[y][x] != 0) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
     /**
     *@return false when the board is not solveable and leaves the board filled with zeros;
 
@@ -147,50 +162,34 @@ public class QueenBoard {
 
     */
 
-
-    private boolean empty () {
-      for (int y = 0; y < board.length; y ++) {
-        for (int x = 0; x < board[0].length; x ++) {
-          if (board[y][x] != 0) {
-            return false;
-          }
-        }
-      }
-      return true;
-    }
-
     public boolean solve(){
     if (!empty ()) {
-      throw new IllegalStateException ();
+      throw new IllegalStateException (); // through exception if board starts with any non-zero values
     }
     if (solvable (0)) {
       return true;
     }
     else {
-      for (int y = 0; y < board.length; y++) {
-        for (int x = 0; x < board[0].length; x++) {
-          board[y][x] = 0;
-        }
-      }
+      this.reset ();
       return false;
     }
   }
 
   private boolean solvable (int col) {
-    if (col >= board[0].length) {
-      return true;
+    if (col >= board[0].length) { //if reaches the end of the board
+      return true; //return true
     }
     else {
-      for (int r = 0; r < board.length; r ++) {
-        if (addQueen (col,r)) {
-          if (solvable (col + 1)) {
+      for (int r = 0; r < board.length; r ++) { //go through each row
+        if (addQueen (col,r)) { //if you can add the queen
+          if (solvable (col + 1)) { //check next column
             return true;
           }
-          removeQueen (col,r);
+          removeQueen (col,r); //remove queen afterwards
         }
       }
     }
-    return false;
+    return false; //else return false
   }
 
     /**
@@ -200,27 +199,29 @@ public class QueenBoard {
 
   public int countSolutions(){
     if (!empty ()) {
-      throw new IllegalStateException ();
+      throw new IllegalStateException (); // through exception if board starts with any non-zero values
     }
-    return counter (0);
+    int ans = counter (0);
+    this.reset ();
+    return ans;
   }
 
   private int counter (int col) {
-    if (board.length < 2 ) {
+    if (board.length < 2 ) { //if size is 0 or 1 there is one solution
       return 1;
     }
     if (col >= board[0].length) {
-      return 1;
+      return 1; //if col reaches the end, return 1
     }
     else {
-      int sum = 0;
-      for (int r = 0; r < board.length; r ++) {
-        if (addQueen (col,r)) {
-          sum += counter (col + 1);
-          removeQueen (col,r);
+      int sum = 0; //num solutions
+      for (int r = 0; r < board.length; r ++) { //going through each row
+        if (addQueen (col,r)) { //if you can add the queen
+          sum += counter (col + 1); //add to sum
+          removeQueen (col,r); //then remove queen
         }
       }
-      return sum;
+      return sum; //at end return the sum
     }
     /*
     if (col >= board[0].length) {
