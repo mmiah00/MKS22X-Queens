@@ -10,7 +10,7 @@ public class QueenBoard {
     }
   }
 
-  public boolean addQueen(int x, int y) { //checks if you can add a queen, sees if safe for queen to be placed at x, y
+  private boolean addQueen(int x, int y) { //checks if you can add a queen, sees if safe for queen to be placed at x, y
     if (x < board[0].length && y < board.length && x >=0 && y >= 0 && board[y][x] == 0 ) {
       if (this.eliminate (x, y,  1,  0) //for right of queen
           && this.eliminate (x, y, -1,  0) //for left of queen
@@ -44,7 +44,7 @@ public class QueenBoard {
     return true;
   }
 
-  public boolean removeQueen(int x, int y) {
+  private boolean removeQueen(int x, int y) {
     if (x < board[0].length && y < board.length && x >= 0 && y >= 0 && board[y][x] == -1) {
       this.recuperate (x + 1, y,  1,  0); //for right of queen
       this.recuperate (x - 1, y, -1,  0); //for left of queen
@@ -160,23 +160,7 @@ public class QueenBoard {
     }
   }
 
-  public boolean solvable (int col) {
-    /*
-    if (col >= board[0].length) {
-      return true;
-    }
-    else {
-      for (int a= 0 ; a < board.length; a ++) {
-        if (this.addQueen (a,col)) {
-          if (solvable (x + 1, y)) {
-            return true;
-          }
-          this.removeQueen (x,y);
-        }
-      }
-    }
-    return false;
-    */
+  private boolean solvable (int col) {
     if (col >= board[0].length) {
       return true;
     }
@@ -190,7 +174,7 @@ public class QueenBoard {
         }
       }
     }
-    return false; 
+    return false;
   }
 
     /**
@@ -198,7 +182,27 @@ public class QueenBoard {
     *@throws IllegalStateException when the board starts with any non-zero value
     */
   public int countSolutions() throws IllegalStateException{
-    return 1;
+    if (this.solve () == false) {
+      return 0;
+    }
+    else {
+      return counter (0,0);
+    }
+  }
+
+  private int counter (int col, int sum) {
+    if (col >= board.length) {
+      return sum;
+    }
+    else {
+      for (int r = 0; r < board.length; r ++) {
+        if (addQueen (col, r)) {
+          sum += 1;
+        }
+        return counter (col + 1, sum);
+      }
+    }
+    return -1; 
   }
 
 

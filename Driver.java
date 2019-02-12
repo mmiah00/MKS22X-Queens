@@ -15,6 +15,14 @@ public class Driver {
     for (int x = 1; x <= 10; x ++) {
       QueenBoard testing = new QueenBoard (x);
       System.out.println (x + ": " + testing.solve ());
+      System.out.println (testing.toString ());
     }
+
+
+    for (int x = 1; x <= 10; x ++) {
+      QueenBoard testing = new QueenBoard (x);
+      System.out.println (x + ": " + testing.countSolutions ());
+    }
+    
   }
 }
