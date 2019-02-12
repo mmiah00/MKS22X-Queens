@@ -140,9 +140,7 @@ public class QueenBoard {
     return ans;
   }
 
-
-
-  private boolean empty () {
+  private boolean empty () { //checks if board filled with 0s
     for (int y = 0; y < board.length; y ++) {
       for (int x = 0; x < board[0].length; x ++) {
         if (board[y][x] != 0) {
@@ -170,7 +168,7 @@ public class QueenBoard {
       return true;
     }
     else {
-      this.reset ();
+      this.reset (); //not solvable so it resets the board
       return false;
     }
   }
